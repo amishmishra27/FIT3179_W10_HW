@@ -3,7 +3,7 @@
   "title": "Natural Disaster Incidents by State",
   "padding": {"left": -158, "right": 0, "top": 0, "bottom": 0},
   "data": {
-    "url": "https://raw.githubusercontent.com/amishmishra27/bugfix/refs/heads/main/Events.csv"
+    "url": "https://raw.githubusercontent.com/amishmishra27/FIT3179_W10_HW/refs/heads/main/Data/Events.csv"
   },
   "width": "container",
   "height": "container",
