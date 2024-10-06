@@ -1,0 +1,144 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Natural Disaster Incidents by State",
+  "padding": {"left": -158, "right": 0, "top": 0, "bottom": 0},
+  "data": {
+    "url": "https://raw.githubusercontent.com/amishmishra27/bugfix/refs/heads/main/Events.csv"
+  },
+  "width": "container",
+  "height": "container",
+  "transform": [
+    {
+      "filter": "datum.Injured > 0"
+    },
+    {
+      "filter": "datum.Fatalities > 0"
+    }
+  ],
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "state_highlight",
+          "select": {
+            "type": "point",
+            "fields": ["Zone"]
+          },
+          "bind": "legend"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 45
+      },
+      "encoding": {
+        "x": {
+          "field": "Injured",
+          "type": "quantitative",
+          "title": "Injuries",
+          "axis": {"tickCount": 4},
+          "scale": {
+            "type": "log",
+            "domain": [1,10000]
+          }
+        },
+        "y": {
+          "field": "Fatalities",
+          "type": "quantitative",
+          "title": "Deaths",
+          "axis": {"tickCount": 3},
+          "scale": {
+            "type": "log",
+            "domain": [1,1000]
+          }
+        },
+        "color": {
+          "field": "Zone",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Victoria",
+              "Northern Territory",
+              "Tasmania",
+              "Western Australia",
+              "New South Wales",
+              "Queensland",
+              "South Australia"
+            ],
+            "range": [
+              "#e41a1c",
+              "#984ea3",
+              "#ff7f00",
+              "#a6cee3",
+              "#377eb8",
+              "#a65628",
+              "#228B22"
+            ]
+          }
+        },
+        "tooltip" : [
+          {"field": "Zone", "type": "nominal"},
+          {"field": "Event", "type": "nominal"},
+          {"field": "Injured", "type": "quantitative", "title": "Injuries"},
+          {"field": "Fatalities", "type": "quantitative", "title": "Deaths"}
+        ],
+        "opacity": {
+          "condition": {
+            "param": "state_highlight",
+            "value": 0.65
+          },
+          "value": 0.05
+        }
+      }
+    },
+    {
+      "mark":{
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": 50,
+        "dy": 10,
+        "fontSize": 10.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "x": {
+          "field": "Injured",
+          "type": "quantitative",
+          "title": "Injuries",
+          "axis": {"tickCount": 4},
+          "scale": {
+            "type": "log",
+            "domain": [1,10000]
+          }
+        },
+        "y": {
+          "field": "Fatalities",
+          "type": "quantitative",
+          "title": "Deaths",
+          "axis": {"tickCount": 3},
+          "scale": {
+            "type": "log",
+            "domain": [1,1000]
+          }
+        },
+        "text": {"field": "Event", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition":{
+            "test": "datum['Event'] == 'Cyclone Tracy' || datum['Event'] == 'Bushfire - Black Saturday, Victoria' || datum['Event'] == 'Flood - Brisbane River' || datum['Event'] == 'Shipwreck - Admella'",
+            "value": 1 
+          },
+          "value": 0
+          
+        },
+        "tooltip": [
+          {"field": "Zone", "type": "nominal"},
+          {"field": "Event", "type": "nominal"},
+          {"field": "Injured", "type": "quantitative", "title": "Injuries"},
+          {"field": "Fatalities", "type": "quantitative", "title": "Deaths"}
+        ]
+      }
+    }
+  ]
+}
